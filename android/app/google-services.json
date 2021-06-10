@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "214313627955",
+    "project_id": "whroom-project",
+    "storage_bucket": "whroom-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214313627955:android:2c49599369aa524b2d8e46",
+        "android_client_info": {
+          "package_name": "com.example.whroom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214313627955-b3hk8rj1nff04senrtvsp4ne640pnu83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh53R1gALysLK1i3Dt1xMlyANDm1ZYkks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214313627955-b3hk8rj1nff04senrtvsp4ne640pnu83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214313627955:android:3475e504dfc07bb22d8e46",
+        "android_client_info": {
+          "package_name": "com.example.whroom_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214313627955-b3hk8rj1nff04senrtvsp4ne640pnu83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh53R1gALysLK1i3Dt1xMlyANDm1ZYkks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214313627955-b3hk8rj1nff04senrtvsp4ne640pnu83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214313627955:android:697191ed1f07d3c12d8e46",
+        "android_client_info": {
+          "package_name": "com.example.whroomapp1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214313627955-b3hk8rj1nff04senrtvsp4ne640pnu83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh53R1gALysLK1i3Dt1xMlyANDm1ZYkks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214313627955-b3hk8rj1nff04senrtvsp4ne640pnu83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
