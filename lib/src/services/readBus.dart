@@ -13,27 +13,24 @@ class ReadBus{
     bonnetid = bid;
   }
 
+  ReadBus.fromto(dynamic from, dynamic to){
+    from= from;
+    to=to;
+  }
+
 
   //Get entries
-  Future<Null> getwithBonnetid(){
+  Future<QuerySnapshot> getwithBonnetid(){
     return _db
         .collection('bus')
         .where("bonnetid", isEqualTo: bonnetid)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        print(doc["bonnetid"]);
-        print(doc["stops"]);
-      });
-    });
-
+        .get();
   }
 
   Future<Null> getwithFromTo(){
     return _db
         .collection('bus')
-        .where("stops", arrayContains: from)
-        .where("stops", arrayContains: to)
+        .where('from', isEqualTo: from)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {

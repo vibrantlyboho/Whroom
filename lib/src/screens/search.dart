@@ -5,25 +5,27 @@ import 'package:whroomapp1/src/screens/login.dart';
 import 'package:whroomapp1/src/services/readBus.dart';
 
 
+final auth= FirebaseAuth.instance;
+final busRef= FirebaseFirestore.instance.collection('bus');
+
 class SearchScreen extends StatefulWidget {
+
   final String from;
   final String to;
+  Future<QuerySnapshot> busDetails;
 
 
-  const SearchScreen({Key? key, required this.from, required this.to}) : super(key: key);
+  SearchScreen({Key? key, required this.from, required this.to, required this.busDetails}) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final auth= FirebaseAuth.instance;
 
 
   @override
   Widget build(BuildContext context) {
-    final busRef= FirebaseFirestore.instance.collection('bus');
-
 
     return Scaffold(
       appBar: AppBar(
@@ -47,8 +49,8 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: busRef.snapshots(),
+      body: FutureBuilder(
+        future: widget.busDetails,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
           if(snapshot.hasData){
 
@@ -93,11 +95,4 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-
-
-class Bus{
-  dynamic bonnetid;
-  dynamic isRunning;
-  dynamic stops;
-}
 
