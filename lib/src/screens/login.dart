@@ -86,10 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     try{
                       UserCredential currentuser= await auth.createUserWithEmailAndPassword(email: _email, password: _password);
-                      //print('USER IS: ${currentuser.user!.uid}');
+                      //getting user uid from firebaseauth, storing it in uid and creating a new user in user collection
                       String _uid= currentuser.user!.uid;
                       AddUser user= new AddUser(_username, _email, _password, _uid);
                       user.addUser();
+                      //
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
                     } on FirebaseAuthException catch(e){
                       print('FAILED with error code: ${e.code}');

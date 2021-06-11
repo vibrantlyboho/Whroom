@@ -6,6 +6,7 @@ import 'package:whroomapp1/src/screens/find.dart';
 import 'package:whroomapp1/src/services/readBus.dart';
 import 'package:whroomapp1/src/models/Bus.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final auth= FirebaseAuth.instance;
   final currentuser= FirebaseAuth.instance.currentUser;
   String _from='', _to='', _bonnetid='';
-  final PageController controller = PageController(initialPage: 0);
+  final PageController controller = PageController(initialPage: 0); //for PageView, changing between 2 screens
 
   @override
   Widget build(BuildContext context) {
@@ -121,10 +122,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ElevatedButton(
                     onPressed: (){
+
                       final ReadBus bus= ReadBus(_bonnetid);
                       dynamic busDetails= bus.getwithBonnetid();
                       print("Bus Details $busDetails");
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => FindScreen(bonnetid: _bonnetid, busDetails: busDetails,)));
+
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.yellow[700]),
@@ -138,3 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
+
+

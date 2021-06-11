@@ -6,9 +6,13 @@ import 'package:whroomapp1/src/models/bus.dart';
 class ReadBus{
   FirebaseFirestore _db= FirebaseFirestore.instance;
   String bonnetid= '';
+  dynamic from;
+  dynamic to;
+
   ReadBus(String bid){
     bonnetid = bid;
   }
+
 
   //Get entries
   Future<Null> getwithBonnetid(){
@@ -24,6 +28,22 @@ class ReadBus{
     });
 
   }
+
+  Future<Null> getwithFromTo(){
+    return _db
+        .collection('bus')
+        .where("stops", arrayContains: from)
+        .where("stops", arrayContains: to)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc["bonnetid"]);
+        print(doc["stops"]);
+      });
+    });
+
+  }
+
 
 }
 
