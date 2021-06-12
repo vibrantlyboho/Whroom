@@ -68,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              //Sign In Button
               ElevatedButton(
                   onPressed: () async{
                     try{
@@ -82,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: MaterialStateProperty.all(Colors.yellow[700]),
                   ),
                   child: Text('Sign in')),
+              //Sign Up Button
               ElevatedButton(
                   onPressed: () async {
                     try{
@@ -108,3 +110,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

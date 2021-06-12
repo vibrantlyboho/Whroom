@@ -6,16 +6,16 @@ import 'package:whroomapp1/src/models/bus.dart';
 class ReadBus{
   FirebaseFirestore _db= FirebaseFirestore.instance;
   String bonnetid= '';
-  dynamic from;
-  dynamic to;
+  String from= '';
+  String to= '';
 
   ReadBus(String bid){
     bonnetid = bid;
   }
 
-  ReadBus.fromto(dynamic from, dynamic to){
-    from= from;
-    to=to;
+  ReadBus.fromto(String from, String to){
+    this.from= from;
+    this.to=to;
   }
 
 
@@ -27,17 +27,12 @@ class ReadBus{
         .get();
   }
 
-  Future<Null> getwithFromTo(){
+  Future<QuerySnapshot> getwithFromTo(){
     return _db
         .collection('bus')
         .where('from', isEqualTo: from)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        print(doc["bonnetid"]);
-        print(doc["stops"]);
-      });
-    });
+        .where('to', isEqualTo: to)
+        .get();
 
   }
 

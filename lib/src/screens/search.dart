@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:whroomapp1/src/screens/login.dart';
+import 'package:whroomapp1/src/screens/singlebus.dart';
 import 'package:whroomapp1/src/services/readBus.dart';
+
+import 'home.dart';
 
 
 final auth= FirebaseAuth.instance;
@@ -33,7 +36,9 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.yellow[700],
         actions: [
           IconButton(
-              onPressed: (){},
+              onPressed: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
               icon: const Icon(Icons.home)
           ),
           IconButton(
@@ -65,14 +70,29 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: new InkWell(
                           onTap: () {
                             print("tapped");
+                            String bonnetid= snapshot.data!.docs[index].get("bonnetid");
+                            String from= snapshot.data!.docs[index].get("from");
+                            String to= snapshot.data!.docs[index].get("to");
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleBusScreen(bonnetid: bonnetid, from: from, to: to)));
+                            print(snapshot.data!.docs[index].get("bonnetid"));
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Row(
                                 children: [
-                                  Text("Bonnet ID: ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey[700]),),
-                                  Text(snapshot.data!.docs[index].get('bonnetid'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey[700]),),
+                                  Icon(Icons.directions_bus),
+                                  Text(snapshot.data!.docs[index].get('bonnetid'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.yellow[700]),),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.flag),
+                                  Text(snapshot.data!.docs[index].get('from'), style: TextStyle(fontSize: 20, color: Colors.grey[700]),),
+                                  SizedBox(width: 20,),
+                                  Icon(Icons.pin_drop),
+                                  Text(snapshot.data!.docs[index].get('to'), style: TextStyle(fontSize: 20, color: Colors.grey[700]),),
+                                  //Text(snapshot.data!.docs[index].get('stops'), style: TextStyle(fontSize: 20, color: Colors.grey[700]),),
                                 ],
                               ),
                             ],

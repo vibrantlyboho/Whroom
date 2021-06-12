@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: (){
                       final ReadBus readbus= ReadBus.fromto(_from, _to);
                       dynamic busDetails= readbus.getwithFromTo();
-                      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchScreen(from: _from, to: _to, busDetails: busDetails,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchScreen(from: _from, to: _to, busDetails: busDetails,)));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.yellow[700]),
@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       final ReadBus readbus= ReadBus(_bonnetid);
                       dynamic busDetails= readbus.getwithBonnetid();
                       //print("Bus Details $busDetails");
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => FindScreen(bonnetid: _bonnetid, busDetails: busDetails,)));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FindScreen(bonnetid: _bonnetid, busDetails: busDetails,)));
 
                     },
                     style: ButtonStyle(
