@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.yellow[700]),
                   ),
-                  child: Text('Sign Up'))
+                  child: Text('Sign Up')),
             ],
           )
         ],

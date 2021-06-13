@@ -24,6 +24,7 @@ class ReadBus{
     return _db
         .collection('bus')
         .where("bonnetid", isEqualTo: bonnetid)
+        .where("isRunning", isEqualTo: true)
         .get();
   }
 
@@ -32,8 +33,8 @@ class ReadBus{
         .collection('bus')
         .where('from', isEqualTo: from)
         .where('to', isEqualTo: to)
+        .where("isRunning", isEqualTo: true)
         .get();
-
   }
 
 
@@ -41,80 +42,3 @@ class ReadBus{
 
 
 
-
-
-
-
-
-
-
-
-/*
-
-class ReadBus extends StatefulWidget {
-  const ReadBus({Key? key}) : super(key: key);
-
-  @override
-  _ReadBusState createState() => _ReadBusState();
-}
-
-class _ReadBusState extends State<ReadBus> {
-
-  String bonnetid='';
-  String from='';
-  String to='';
-  bool isRunning= true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('Check if search condition true'),
-    );
-  }
-
-}
-*/
-
-
-
-/*class ReadBus extends StatelessWidget {
-  const ReadBus({Key? key}) : super(key: key);
-
-  Widget _buildListItem(BuildContext context ){
-    return ListTile(
-      contentPadding: EdgeInsets.all(0),
-      title: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Text('bus name'),
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.orange,
-            ),
-            padding: const EdgeInsets.all(100),
-            child: Text('5'),
-          ),
-        ],
-      ),
-      onTap: (){},
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 500,
-       child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemExtent: 10,
-            itemCount: 5,
-            itemBuilder: (context, index) => _buildListItem(context)
-        )
-    );
-
-  }
-}
-*/

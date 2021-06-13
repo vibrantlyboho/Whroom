@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       final ReadBus readbus= ReadBus(_bonnetid);
                       dynamic busDetails= readbus.getwithBonnetid();
                       //print("Bus Details $busDetails");
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FindScreen(bonnetid: _bonnetid, busDetails: busDetails,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => FindScreen(bonnetid: _bonnetid, busDetails: busDetails,)));
 
                     },
                     style: ButtonStyle(

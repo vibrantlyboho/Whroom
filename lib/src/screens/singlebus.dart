@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whroomapp1/src/services/occupancyService.dart';
 
+import 'home.dart';
 import 'login.dart';
 
 final auth= FirebaseAuth.instance;
@@ -9,17 +13,23 @@ class SingleBusScreen extends StatelessWidget {
   final String bonnetid;
   final String from;
   final String to;
-  const SingleBusScreen({Key? key, required this.bonnetid, required this.from, required this.to}) : super(key: key);
+  final List<dynamic> stops;
+  const SingleBusScreen({Key? key, required this.bonnetid, required this.from, required this.to, required this.stops}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Occupancy occupancy= Occupancy(bonnetid);
+    dynamic OccDetails= occupancy.getOccdetails();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Bus Details'),
         backgroundColor: Colors.yellow[700],
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
               icon: const Icon(Icons.home)),
           IconButton(
               onPressed: () {},
@@ -33,22 +43,23 @@ class SingleBusScreen extends StatelessWidget {
               icon: const Icon(Icons.logout)),
         ],
       ),
-      body: SingleChildScrollView(
-        child:Center(
-        child: Column(
+      body: Center(
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
           children: <Widget>[
             SizedBox(height: 10,),
             CircleAvatar(
               backgroundImage: AssetImage('assets/bus.jpeg'), radius: 100,
             ),
             SizedBox(height: 10,),
-            Text(bonnetid, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+            Center(
+              child: Text(bonnetid, style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 25, color: Colors.yellow[800])),
+            ),
             SizedBox(height:10),
             Row(mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(width: 80,
                       height: 80,
-                      padding: EdgeInsets.fromLTRB(30,0,0,0),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle), child:Image(image: AssetImage('assets/get-on-bus.png'))
                   ),
@@ -60,7 +71,6 @@ class SingleBusScreen extends StatelessWidget {
                 children: <Widget>[
                   Container(width: 80,
                       height: 80,
-                      padding: EdgeInsets.fromLTRB(30,0,0,0),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle), child:Image(image: AssetImage('assets/get-off-bus.png'))
                   ),
@@ -68,7 +78,11 @@ class SingleBusScreen extends StatelessWidget {
                   Text(to, style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 25, color: Colors.yellow[800])),
                 ]),
             SizedBox(height:30),
-            Text('PASSENGER REVIEW ON SEAT OCCUPANCY', style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 15)),
+            Text('BUS STOPS', style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 25, color: Colors.yellow[800])),
+            SizedBox(height: 10,),
+            BusStopsDisplay(stops),
+            SizedBox(height:30),
+            Text('PASSENGER REVIEW ON SEAT OCCUPANCY', style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 25, color: Colors.yellow[800])),
             SizedBox(height: 10,),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -119,21 +133,65 @@ class SingleBusScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height:10),
-            Container(padding: const EdgeInsets.fromLTRB(20, 10, 0, 20), child: Align(alignment: Alignment.centerLeft,
-              child:ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.yellow[700]),
-                ),
-                onPressed: () {
-
-                },
-                child: Text('Board the bus',style: TextStyle(fontSize: 17),),
-              ), ))  ,
+            BoardOrExit(bonnetid: bonnetid, occDetails: OccDetails,),
           ],
         ),
       ),
-    ),
     );
   }
 }
 
+
+
+BusStopsDisplay(List<dynamic> stops){
+  //print(stops);
+  String BusStopsList='';
+  for(int i=0; i<stops.length; i++){
+    BusStopsList+= stops[i]+", ";
+  }
+  //print(BusStopsList);
+  return Text(BusStopsList, style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25));
+}
+
+
+///////////////////
+class BoardOrExit extends StatefulWidget {
+  String bonnetid;
+  Future<QuerySnapshot> occDetails;
+  BoardOrExit({Key? key, required this.bonnetid, required this.occDetails}) : super(key: key);
+
+  @override
+  _BoardOrExitState createState() => _BoardOrExitState();
+}
+
+///////////////////
+class _BoardOrExitState extends State<BoardOrExit> {
+  bool isBoarded= false;
+
+  void toggleBoard(){
+    setState(() {
+      isBoarded = !isBoarded;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 10, 0, 20),
+      child: Column(
+        children: [
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.yellow[700]),
+            ),
+            onPressed: () {
+              toggleBoard();
+            },
+            child: Text((isBoarded? 'Exit': 'Board the bus'),style: TextStyle(fontSize: 17),),
+          ),
+        ],
+      ),
+    );
+  }
+}
