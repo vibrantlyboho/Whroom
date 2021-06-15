@@ -87,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: (){
                       final ReadBus readbus= ReadBus.fromto(_from, _to);
                       dynamic busDetails= readbus.getwithFromTo();
+                      //print(busDetails);
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchScreen(from: _from, to: _to, busDetails: busDetails,)));
                     },
                     style: ButtonStyle(

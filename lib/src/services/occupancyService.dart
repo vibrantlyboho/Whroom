@@ -5,9 +5,8 @@ class Occupancy{
   FirebaseFirestore _db= FirebaseFirestore.instance;
   late String bonnetid;
   late String option;
-  late int voteCount;
+  late int voteCount=0;
   late String uid;
-  late String username;
 
   Occupancy(String bid){
     bonnetid= bid;
@@ -16,12 +15,11 @@ class Occupancy{
   Future<QuerySnapshot> getOccdetails(){
     return _db
         .collection('loc_n_seat')
-        .orderBy('voteCount', descending: true)
         .where("bonnetid", isEqualTo: bonnetid)
         .get();
   }
 
-  Future<void> addOccdetails(){
+  Future<void> addOccdetails(String bonnetid, String option, int voteCount, String uid){
     return _db
         .collection('loc_n_seat')
         .add({
@@ -29,12 +27,12 @@ class Occupancy{
           'option': option,
           'voteCount': voteCount,
           'uid': uid,
-            'username': username
         })
-        .then((value) => print("Location Added"))
-        .catchError((error) => print("Failed to add location: $error"));
+        .then((value) => print("Occupancy Details Added"))
+        .catchError((error) => print("Failed to add occupancy details: $error"));
   }
 
+  //function to update votecount for the tapped card
 
 }
 

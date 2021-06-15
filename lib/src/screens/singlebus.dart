@@ -6,6 +6,7 @@ import 'package:whroomapp1/src/services/occupancyService.dart';
 
 import 'home.dart';
 import 'login.dart';
+import 'occupancy.dart';
 
 final auth= FirebaseAuth.instance;
 
@@ -18,8 +19,7 @@ class SingleBusScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Occupancy occupancy= Occupancy(bonnetid);
-    dynamic OccDetails= occupancy.getOccdetails();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -37,8 +37,7 @@ class SingleBusScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 auth.signOut();
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               icon: const Icon(Icons.logout)),
         ],
@@ -81,59 +80,8 @@ class SingleBusScreen extends StatelessWidget {
             Text('BUS STOPS', style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 25, color: Colors.yellow[800])),
             SizedBox(height: 10,),
             BusStopsDisplay(stops),
-            SizedBox(height:30),
-            Text('PASSENGER REVIEW ON SEAT OCCUPANCY', style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 25, color: Colors.yellow[800])),
-            SizedBox(height: 10,),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                InkWell(
-                  onTap: (){},
-                  child: Container(
-                    width: 70.0,
-                    height: 70.0,
-                    decoration:
-                    BoxDecoration(
-                      color: Colors.yellow[700],
-                      shape: BoxShape.circle,
-                      boxShadow: [ BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 5.0, // soften the shadow
-                        spreadRadius: 0.0, //extend the shadow
-                        offset: Offset(
-                          2.0, // Move to right 10  horizontally
-                          2.0, // Move to bottom 10 Vertically
-                        ),
-                      )],
-                    ),
-                    child: Center(child: Text('Empty',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)),
-                  ),
-                ),
-                InkWell(
-                  onTap: (){},
-                  child: Container(
-                    width: 70.0,
-                    height: 70.0,
-                    decoration:
-                    BoxDecoration(
-                      color: Colors.yellow[700],
-                      shape: BoxShape.circle,
-                      boxShadow: [ BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 5.0, // soften the shadow
-                        spreadRadius: 0.0, //extend the shadow
-                        offset: Offset(
-                          2.0, // Move to right 10  horizontally
-                          2.0, // Move to bottom 10 Vertically
-                        ),
-                      )],
-                    ),
-                    child: Center(child: Text('Available',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)),
-                  ),
-                ),
-              ],
-            ),
             SizedBox(height:10),
-            BoardOrExit(bonnetid: bonnetid, occDetails: OccDetails,),
+            BoardOrExit(bonnetid: bonnetid),
           ],
         ),
       ),
@@ -157,14 +105,12 @@ BusStopsDisplay(List<dynamic> stops){
 ///////////////////
 class BoardOrExit extends StatefulWidget {
   String bonnetid;
-  Future<QuerySnapshot> occDetails;
-  BoardOrExit({Key? key, required this.bonnetid, required this.occDetails}) : super(key: key);
+  BoardOrExit({Key? key, required this.bonnetid, }) : super(key: key);
 
   @override
   _BoardOrExitState createState() => _BoardOrExitState();
 }
 
-///////////////////
 class _BoardOrExitState extends State<BoardOrExit> {
   bool isBoarded= false;
 
@@ -181,6 +127,18 @@ class _BoardOrExitState extends State<BoardOrExit> {
       padding: const EdgeInsets.fromLTRB(20, 10, 0, 20),
       child: Column(
         children: [
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20,),
+            ),
+            onPressed: () {
+              final Occupancy occupancy= Occupancy(widget.bonnetid);
+              dynamic OccDetails= occupancy.getOccdetails();
+              //print(OccDetails);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => OccupancyScreen(bonnetid: widget.bonnetid, isBoarded: isBoarded, OccDetails: OccDetails)));
+            },
+            child: const Text('Passenger review on seat occupancy'),
+          ),
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.yellow[700]),
