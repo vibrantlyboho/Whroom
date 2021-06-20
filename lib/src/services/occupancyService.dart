@@ -54,6 +54,16 @@ class Occupancy{
         .catchError((error) => print("Failed to delete entry: $error"));
   }
 
+  //delete an entry when user exits the bus
+  Future<void> deleteEntryonExit(String uid){
+    return _db
+        .collection('loc_n_seat')
+        .doc()
+        .delete()
+        .then((value) => print("Entry Deleted"))
+        .catchError((error) => print("Failed to delete entry: $error"));
+  }
+
 }
 
 

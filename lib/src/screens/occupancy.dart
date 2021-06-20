@@ -80,13 +80,19 @@ class _OccupancyScreenState extends State<OccupancyScreen> {
                             String snapid= snapshot.data!.docs[index].id;
                             //widget.isBoarded? print("Upvoting"): null;
                             //print(snapshot.data!.docs[index].id);
-                            if(currentuser!.uid == snapshot.data!.docs[index].get('uid')){
-                              print("Deleting your entry");
-                              occupancyService.deleteEntryOnTap(snapid);
+                            if(widget.isBoarded){
+                              if(currentuser!.uid == snapshot.data!.docs[index].get('uid')){
+                                print("Deleting your entry");
+                                occupancyService.deleteEntryOnTap(snapid);
+                              }
+                              else{
+                                occupancyService.upVote(snapid);
+                              }
                             }
                             else{
-                              occupancyService.upVote(snapid);
+                              print('Please board the bus to upvote or create new entries');
                             }
+
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
