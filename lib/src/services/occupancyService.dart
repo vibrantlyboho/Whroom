@@ -12,6 +12,8 @@ class Occupancy{
     bonnetid= bid;
   }
 
+  Occupancy.plain();
+
   Future<QuerySnapshot> getOccdetails(){
     return _db
         .collection('loc_n_seat')
@@ -33,6 +35,24 @@ class Occupancy{
   }
 
   //function to update votecount for the tapped card
+  Future<void> upVote(String snapid){
+    return _db
+        .collection('loc_n_seat')
+        .doc(snapid)
+        .update({'voteCount': FieldValue.increment(1)})
+        .then((value) => print("Upvoted"))
+        .catchError((error) => print("Failed to upvote: $error"));
+  }
+
+  //delete an entry given by user
+  Future<void> deleteEntryOnTap(String snapid){
+    return _db
+        .collection('loc_n_seat')
+        .doc(snapid)
+        .delete()
+        .then((value) => print("Entry Deleted"))
+        .catchError((error) => print("Failed to delete entry: $error"));
+  }
 
 }
 

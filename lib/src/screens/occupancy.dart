@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:whroomapp1/src/screens/createnewoccupancy.dart';
+import 'package:whroomapp1/src/services/occupancyService.dart';
 
 import 'home.dart';
 import 'login.dart';
 
 final auth= FirebaseAuth.instance;
+final currentuser= FirebaseAuth.instance.currentUser;
 
 class OccupancyScreen extends StatefulWidget {
   final String bonnetid;
@@ -20,9 +22,13 @@ class OccupancyScreen extends StatefulWidget {
 }
 
 class _OccupancyScreenState extends State<OccupancyScreen> {
+  Occupancy occupancyService= Occupancy.plain();
+
   @override
   Widget build(BuildContext context) {
     //print(widget.isBoarded);
+    //print(currentuser!.uid);
+
 
     displayFAB(){
       if(widget.isBoarded){
@@ -71,7 +77,16 @@ class _OccupancyScreenState extends State<OccupancyScreen> {
                       child: Card(
                         child: new InkWell(
                           onTap: () {
-                            widget.isBoarded? print("Upvoting"): null;
+                            String snapid= snapshot.data!.docs[index].id;
+                            //widget.isBoarded? print("Upvoting"): null;
+                            //print(snapshot.data!.docs[index].id);
+                            if(currentuser!.uid == snapshot.data!.docs[index].get('uid')){
+                              print("Deleting your entry");
+                              occupancyService.deleteEntryOnTap(snapid);
+                            }
+                            else{
+                              occupancyService.upVote(snapid);
+                            }
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,10 +103,19 @@ class _OccupancyScreenState extends State<OccupancyScreen> {
                               Row(
                                 children: [
                                   SizedBox(width: 10,),
-                                  Text('Submitted by: ', style: TextStyle(fontSize: 15, color: Colors.grey[700]),),
+                                  Text('Vote Count: ', style: TextStyle(fontSize: 15, color: Colors.grey[700]),),
                                   SizedBox(width: 10,),
-                                  Text(snapshot.data!.docs[index].get('uid'), style: TextStyle(fontSize: 15, color: Colors.grey[700]),),
+                                  Text(snapshot.data!.docs[index].get('voteCount').toString(), style: TextStyle(fontSize: 15, color: Colors.grey[700]),),
                                 ],
+                              ),
+                              SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  SizedBox(width: 10,),
+                                  currentuser!.uid == snapshot.data!.docs[index].get('uid')?
+                                  Text('Your Entry', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red[700]),) :
+                                  Text('Submitted by:   ${snapshot.data!.docs[index].get('uid')}', style: TextStyle(fontSize: 15, color: Colors.grey[700]),),
+                                  ],
                               ),
                             ],
                           ),
