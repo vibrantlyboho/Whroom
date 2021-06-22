@@ -47,7 +47,8 @@ class _FindScreenState extends State<FindScreen> {
           IconButton(
               onPressed: (){
                 auth.signOut();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                    LoginScreen()), (Route<dynamic> route) => false);
               },
               icon: const Icon(Icons.logout)
           ),

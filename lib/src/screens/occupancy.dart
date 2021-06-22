@@ -22,6 +22,9 @@ class OccupancyScreen extends StatefulWidget {
 }
 
 class _OccupancyScreenState extends State<OccupancyScreen> {
+  final snackBarUpVote = SnackBar(content: Text('You have upvote the entry'));
+  final snackBarDelete = SnackBar(content: Text('Deleting your entry'));
+  final snackBarRequest = SnackBar(content: Text('Please board the bus to upvote or create new entries'));
   Occupancy occupancyService= Occupancy.plain();
 
   @override
@@ -57,8 +60,8 @@ class _OccupancyScreenState extends State<OccupancyScreen> {
           IconButton(
               onPressed: () {
                 auth.signOut();
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                    LoginScreen()), (Route<dynamic> route) => false);
               },
               icon: const Icon(Icons.logout)),
         ],
@@ -82,14 +85,17 @@ class _OccupancyScreenState extends State<OccupancyScreen> {
                             //print(snapshot.data!.docs[index].id);
                             if(widget.isBoarded){
                               if(currentuser!.uid == snapshot.data!.docs[index].get('uid')){
+                                ScaffoldMessenger.of(context).showSnackBar(snackBarDelete);
                                 print("Deleting your entry");
                                 occupancyService.deleteEntryOnTap(snapid);
                               }
                               else{
+                                ScaffoldMessenger.of(context).showSnackBar(snackBarUpVote);
                                 occupancyService.upVote(snapid);
                               }
                             }
                             else{
+                              ScaffoldMessenger.of(context).showSnackBar(snackBarRequest);
                               print('Please board the bus to upvote or create new entries');
                             }
 
