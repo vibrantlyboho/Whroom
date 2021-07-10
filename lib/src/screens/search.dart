@@ -74,7 +74,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             String bonnetid= snapshot.data!.docs[index].get("bonnetid");
                             String from= snapshot.data!.docs[index].get("from");
                             String to= snapshot.data!.docs[index].get("to");
-                            List<dynamic> stops= snapshot.data!.docs[index].get("stops");
+                            String stops= snapshot.data!.docs[index].get("stops");
+                            //List<dynamic> stops= snapshot.data!.docs[index].get("stops");
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleBusScreen(bonnetid: bonnetid, from: from, to: to, stops: stops,)));
                             //print(stops);
                           },

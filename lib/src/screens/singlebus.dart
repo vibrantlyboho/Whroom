@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whroomapp1/src/screens/location.dart';
 import 'package:whroomapp1/src/services/occupancyService.dart';
 
 import 'home.dart';
@@ -14,7 +15,8 @@ class SingleBusScreen extends StatelessWidget {
   final String bonnetid;
   final String from;
   final String to;
-  final List<dynamic> stops;
+  final String stops;
+  //final List<dynamic> stops;
   const SingleBusScreen({Key? key, required this.bonnetid, required this.from, required this.to, required this.stops}) : super(key: key);
 
   @override
@@ -80,7 +82,8 @@ class SingleBusScreen extends StatelessWidget {
             SizedBox(height:30),
             Text('BUS STOPS', style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, fontSize: 25, color: Colors.yellow[800])),
             SizedBox(height: 10,),
-            BusStopsDisplay(stops),
+            Text(stops, style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25)),
+            //BusStopsDisplay(stops),
             SizedBox(height:10),
             BoardOrExit(bonnetid: bonnetid),
           ],
@@ -128,6 +131,16 @@ class _BoardOrExitState extends State<BoardOrExit> {
       padding: const EdgeInsets.fromLTRB(20, 10, 0, 20),
       child: Column(
         children: [
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20,),
+            ),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewLocationScreen()));
+
+            },
+            child: const Text('View location of bus'),
+          ),
           TextButton(
             style: TextButton.styleFrom(
               textStyle: const TextStyle(fontSize: 20,),
