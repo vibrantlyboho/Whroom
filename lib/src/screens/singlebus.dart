@@ -19,6 +19,8 @@ class SingleBusScreen extends StatelessWidget {
   //final List<dynamic> stops;
   const SingleBusScreen({Key? key, required this.bonnetid, required this.from, required this.to, required this.stops}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
 

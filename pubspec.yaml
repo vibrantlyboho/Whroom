@@ -36,6 +36,7 @@ dependencies:
   uuid: 3.0.4
   provider: ^5.0.0
   bottom_sheet: ^1.0.0
+  google_maps_flutter: ^2.0.6
 
 
 dev_dependencies:

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'home.dart';
 import 'login.dart';
@@ -16,6 +19,9 @@ class ViewLocationScreen extends StatefulWidget {
 }
 
 class _ViewLocationScreenState extends State<ViewLocationScreen> {
+
+  static final CameraPosition _initialPosition= CameraPosition(target: LatLng(20.4219983, -100.084), zoom: 15);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +46,12 @@ class _ViewLocationScreenState extends State<ViewLocationScreen> {
               icon: const Icon(Icons.logout)),
         ],
       ),
+      body: GoogleMap(
+        mapType: MapType.normal,
+        initialCameraPosition: _initialPosition,
 
+
+      ),
     );
   }
 }
